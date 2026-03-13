@@ -1,0 +1,102 @@
+:root {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  --primary: #1f4d7a;
+  --primary-soft: #2f6a99;
+  --secondary: #0fabbc;
+  --surface: #ffffff;
+  --surface-soft: #f4f7fa;
+  --text-primary: #1a2535;
+  --text-secondary: #5b6d7e;
+  --muted: #7c8a97;
+  --border: #dce4ec;
+  --shadow-sm: 0 1px 5px rgba(17, 33, 57, 0.08);
+  --shadow-md: 0 5px 20px rgba(17, 33, 57, 0.15);
+  --shadow-lg: 0 12px 34px rgba(17, 33, 57, 0.2);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  min-height: 100%;
+}
+
+body {
+  min-width: 320px;
+  background: linear-gradient(160deg, #edf2f7 0%, #e8eff9 55%, #dae2f2 100%);
+  color: var(--text-primary);
+}
+
+#root {
+  height: 100%;
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary-soft), var(--primary));
+  border: none;
+  color: #fff;
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-outline-primary,
+.btn-outline-secondary {
+  border-radius: 8px;
+}
+
+.form-control:focus {
+  border-color: var(--secondary);
+  box-shadow: 0 0 0 0.2rem rgba(15, 171, 188, 0.2);
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.45s ease both;
+}
+
+.slide-in {
+  animation: slideIn 0.45s ease both;
+}
+
+.pulse {
+  animation: pulse 2.2s infinite;
+}
