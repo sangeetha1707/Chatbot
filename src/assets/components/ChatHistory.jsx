@@ -1,83 +1,214 @@
 import React from 'react'
-import { Button } from 'react-bootstrap'
+import { Button, ListGroup } from 'react-bootstrap'
+import { FiMessageSquare, FiTrash2, FiPlus, FiX } from 'react-icons/fi'
+import { formatDistanceToNow } from 'date-fns'
 
-const ChatHistory = ({ chats, currentChatId, onSelectChat, onDeleteChat, onNewChat, onClose }) => {
+const ChatHistory = ({ 
+  chats, 
+  currentChatId, 
+  onSelectChat, 
+  onDeleteChat, 
+  onNewChat,
+  onClose 
+}) => {
   return (
     <div className="chat-history">
       <div className="history-header">
-        <h5>Chats</h5>
-        <Button size="sm" variant="outline-primary" onClick={onNewChat}>New</Button>
-        <Button size="sm" variant="outline-secondary" onClick={onClose}>Close</Button>
+        <h3>Chat History</h3>
+        <Button variant="link" onClick={onClose} className="close-btn d-md-none">
+          <FiX size={24} />
+        </Button>
       </div>
-      <div className="history-list">
-        {chats && chats.length > 0 ? (
-          chats.map((chat) => (
-            <div key={chat.id} className={`history-item ${chat.id === currentChatId ? 'active' : ''}`}>
-              <button className="chat-title" onClick={() => onSelectChat(chat)}>{chat.title || 'Untitled'}</button>
-              <Button size="sm" variant="danger" onClick={() => onDeleteChat(chat.id)}>Delete</Button>
-            </div>
-          ))
+      
+      <Button 
+        variant="primary" 
+        onClick={onNewChat}
+        className="new-chat-btn"
+      >
+        <FiPlus /> New Chat
+      </Button>
+      
+      <ListGroup variant="flush" className="history-list">
+        {chats.length === 0 ? (
+          <div className="empty-history">
+            <FiMessageSquare size={40} />
+            <p>No chat history yet</p>
+            <small>Start a new conversation</small>
+          </div>
         ) : (
-          <p>No saved chats yet.</p>
+          chats.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+            .map(chat => (
+              <ListGroup.Item 
+                key={chat.id}
+                className={`history-item ${chat.id === currentChatId ? 'active' : ''}`}
+              >
+                <div 
+                  className="chat-info"
+                  onClick={() => onSelectChat(chat)}
+                >
+                  <FiMessageSquare className="chat-icon" />
+                  <div className="chat-details">
+                    <div className="chat-title">{chat.title}</div>
+                    <div className="chat-time">
+                      {formatDistanceToNow(new Date(chat.timestamp), { addSuffix: true })}
+                    </div>
+                  </div>
+                </div>
+                <Button 
+                  variant="link" 
+                  onClick={() => onDeleteChat(chat.id)}
+                  className="delete-btn"
+                  title="Delete chat"
+                >
+                  <FiTrash2 />
+                </Button>
+              </ListGroup.Item>
+            ))
         )}
-      </div>
-
+      </ListGroup>
+      
       <style jsx>{`
         .chat-history {
-          padding: 14px;
           height: 100%;
-          background: linear-gradient(180deg, #111827 0%, #0f172a 100%);
-          border-right: 1px solid rgba(148, 163, 184, 0.2);
-          color: #e2e8f0;
-          overflow-y: auto;
+          display: flex;
+          flex-direction: column;
+          background: linear-gradient(135deg, #ffffff 0%, #f0faf5 100%);
+          padding: 20px;
         }
         .history-header {
           display: flex;
-          gap: 8px;
-          align-items: center;
           justify-content: space-between;
-          margin-bottom: 12px;
+          align-items: center;
+          margin-bottom: 20px;
         }
-        .history-header h5 {
+        .history-header h3 {
+          color: #2c3e50;
+          font-size: 1.3rem;
+          font-weight: 600;
           margin: 0;
-          font-size: 0.95rem;
-          color: #f8fafc;
-          font-weight: 700;
+        }
+        .close-btn {
+          color: #7ccf9c;
+          padding: 0;
+        }
+        .close-btn:hover {
+          color: #2c3e50;
+        }
+        .new-chat-btn {
+          width: 100%;
+          margin-bottom: 20px;
+          background: linear-gradient(135deg, #a8e6cf 0%, #7ccf9c 100%);
+          border: none;
+          padding: 12px;
+          border-radius: 30px;
+          font-weight: 500;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          transition: all 0.3s;
+        }
+        .new-chat-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 5px 15px rgba(124, 207, 156, 0.4);
         }
         .history-list {
-          display: flex;
-          flex-direction: column;
-          gap: 8px;
+          flex: 1;
+          overflow-y: auto;
+          border: none;
         }
         .history-item {
           display: flex;
-          justify-content: space-between;
           align-items: center;
-          border: 1px solid rgba(148, 163, 184, 0.2);
-          border-radius: 10px;
-          padding: 8px;
-          background: #0f172a;
+          justify-content: space-between;
+          padding: 12px 15px;
+          margin-bottom: 8px;
+          border: 2px solid #a8e6cf;
+          border-radius: 15px !important;
+          background: white;
+          cursor: pointer;
+          transition: all 0.3s;
+        }
+        .history-item:hover {
+          background: #f0faf5;
+          border-color: #7ccf9c;
+          transform: translateX(5px);
         }
         .history-item.active {
-          border-color: rgba(56, 189, 248, 0.8);
-          box-shadow: 0 0 8px rgba(56, 189, 248, 0.35);
+          background: #a8e6cf;
+          border-color: #7ccf9c;
+        }
+        .history-item.active .chat-title,
+        .history-item.active .chat-time {
+          color: #2c3e50;
+        }
+        .chat-info {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          flex: 1;
+        }
+        .chat-icon {
+          color: #7ccf9c;
+          font-size: 1.2rem;
+        }
+        .chat-details {
+          flex: 1;
         }
         .chat-title {
-          background: none;
-          border: none;
-          text-align: left;
-          color: #e2e8f0;
           font-weight: 500;
-          cursor: pointer;
-          width: 100%;
-          padding: 0;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          font-size: 0.92rem;
+          color: #2c3e50;
+          margin-bottom: 4px;
+          font-size: 0.95rem;
         }
-        .history-item button {
-          color: #dbeafe;
+        .chat-time {
+          font-size: 0.75rem;
+          color: #7ccf9c;
+        }
+        .delete-btn {
+          color: #ff6b6b;
+          padding: 5px;
+          opacity: 0;
+          transition: all 0.3s;
+        }
+        .history-item:hover .delete-btn {
+          opacity: 1;
+        }
+        .delete-btn:hover {
+          color: #ff4444;
+          transform: scale(1.1);
+        }
+        .empty-history {
+          text-align: center;
+          padding: 40px 20px;
+          color: #b8e0d4;
+        }
+        .empty-history p {
+          margin: 10px 0 5px;
+          color: #2c3e50;
+        }
+        .empty-history small {
+          color: #7ccf9c;
+        }
+        
+        .history-list::-webkit-scrollbar {
+          width: 6px;
+        }
+        .history-list::-webkit-scrollbar-track {
+          background: #f0faf5;
+        }
+        .history-list::-webkit-scrollbar-thumb {
+          background: #a8e6cf;
+          border-radius: 3px;
+        }
+        .history-list::-webkit-scrollbar-thumb:hover {
+          background: #7ccf9c;
+        }
+        
+        @media (max-width: 767px) {
+          .chat-history {
+            padding: 15px;
+          }
         }
       `}</style>
     </div>

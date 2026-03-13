@@ -1,46 +1,75 @@
-const STORAGE_KEY = 'gemini_chat_history'
+import localforage from 'localforage'
+
+localforage.config({
+  name: 'GeminiChatbot',
+  storeName: 'chat_history',
+  description: 'Chat history storage for Gemini chatbot'
+})
+
+export const saveChat = async (chat) => {
+  try {
+    await localforage.setItem(chat.id, chat)
+    return true
+  } catch (error) {
+    console.error('Error saving chat:', error)
+    return false
+  }
+}
 
 export const loadChats = async () => {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY)
-    return raw ? JSON.parse(raw) : []
+    const chats = []
+    await localforage.iterate((value, key) => {
+      chats.push(value)
+    })
+    return chats.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
   } catch (error) {
-    console.error('Failed to load chats:', error)
+    console.error('Error loading chats:', error)
     return []
   }
 }
 
-export const saveChat = async (chat) => {
+export const loadChat = async (id) => {
   try {
-    const chats = await loadChats()
-    const idx = chats.findIndex((item) => item.id === chat.id)
-    if (idx >= 0) {
-      chats[idx] = { ...chats[idx], ...chat }
-    } else {
-      chats.push(chat)
-    }
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(chats))
+    const chat = await localforage.getItem(id)
+    return chat
   } catch (error) {
-    console.error('Failed to save chat:', error)
+    console.error('Error loading chat:', error)
+    return null
   }
 }
 
 export const deleteChat = async (id) => {
   try {
-    const chats = await loadChats()
-    const updated = chats.filter((chat) => chat.id !== id)
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(updated))
+    await localforage.removeItem(id)
+    return true
   } catch (error) {
-    console.error('Failed to delete chat:', error)
+    console.error('Error deleting chat:', error)
+    return false
   }
 }
 
 export const updateChat = async (id, updates) => {
   try {
-    const chats = await loadChats()
-    const updated = chats.map((chat) => (chat.id === id ? { ...chat, ...updates } : chat))
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(updated))
+    const chat = await localforage.getItem(id)
+    if (chat) {
+      const updatedChat = { ...chat, ...updates }
+      await localforage.setItem(id, updatedChat)
+      return true
+    }
+    return false
   } catch (error) {
-    console.error('Failed to update chat:', error)
+    console.error('Error updating chat:', error)
+    return false
+  }
+}
+
+export const clearAllChats = async () => {
+  try {
+    await localforage.clear()
+    return true
+  } catch (error) {
+    console.error('Error clearing chats:', error)
+    return false
   }
 }

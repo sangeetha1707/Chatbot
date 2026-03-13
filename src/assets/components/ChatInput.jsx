@@ -61,36 +61,36 @@ const ChatInput = ({ onSendMessage, loading }) => {
       
       <style jsx>{`
         .chat-input-container {
-          padding: 18px 24px;
-          background: #f8fafc;
-          border-top: 1px solid #e2e8f0;
+          padding: 20px 30px;
+          background: linear-gradient(135deg, #ffffff 0%, #f0faf5 100%);
+          border-top: 2px solid #a8e6cf;
         }
         .input-wrapper {
           display: flex;
           gap: 10px;
           align-items: flex-end;
-          background: #ffffff;
-          border: 1px solid #dbeafe;
-          border-radius: 999px;
-          padding: 8px 10px;
-          transition: all 0.2s ease;
+          background: white;
+          border: 2px solid #a8e6cf;
+          border-radius: 30px;
+          padding: 5px 5px 5px 15px;
+          transition: all 0.3s;
         }
         .input-wrapper:focus-within {
-          border-color: var(--primary);
-          box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.18);
+          border-color: #7ccf9c;
+          box-shadow: 0 0 0 3px rgba(124, 207, 156, 0.2);
         }
         .attach-btn {
-          color: #64748b;
+          color: #7ccf9c;
           padding: 8px;
           border-radius: 50%;
           display: flex;
           align-items: center;
           justify-content: center;
-          transition: all 0.2s ease;
+          transition: all 0.3s;
         }
         .attach-btn:hover:not(:disabled) {
-          background: #e2e8f0;
-          color: #0f172a;
+          background: #d4edda;
+          color: #2c3e50;
         }
         .attach-btn:disabled {
           opacity: 0.5;
@@ -101,44 +101,43 @@ const ChatInput = ({ onSendMessage, loading }) => {
           resize: none;
           font-size: 0.95rem;
           line-height: 1.5;
-          max-height: 160px;
-          min-height: 36px;
+          max-height: 150px;
           background: transparent;
-          color: #0f172a;
         }
         .message-input:focus {
           outline: none;
           box-shadow: none;
         }
         .message-input::placeholder {
-          color: #94a3b8;
+          color: #b8e0d4;
         }
         .send-btn {
           border-radius: 50%;
-          width: 44px;
-          height: 44px;
+          width: 45px;
+          height: 45px;
           display: flex;
           align-items: center;
           justify-content: center;
-          background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+          background: linear-gradient(135deg, #a8e6cf 0%, #7ccf9c 100%);
           border: none;
-          color: #ffffff;
-          transition: all 0.2s ease;
+          color: white;
+          transition: all 0.3s;
         }
         .send-btn:hover:not(:disabled) {
-          transform: translateY(-1px);
-          box-shadow: 0 5px 12px rgba(14, 165, 233, 0.4);
+          transform: scale(1.05) translateY(-2px);
+          box-shadow: 0 5px 15px rgba(124, 207, 156, 0.4);
         }
         .send-btn:disabled {
           opacity: 0.5;
           cursor: not-allowed;
         }
+        
         @media (max-width: 767px) {
           .chat-input-container {
-            padding: 12px 16px;
+            padding: 15px 20px;
           }
           .input-wrapper {
-            padding: 6px 8px;
+            padding: 3px 3px 3px 12px;
           }
           .send-btn {
             width: 40px;

@@ -47,8 +47,8 @@ const ChatMessage = ({ message }) => {
       
       <style jsx>{`
         .message-wrapper {
-          margin-bottom: 16px;
-          animation: fadeIn 0.25s ease;
+          margin-bottom: 20px;
+          animation: fadeIn 0.3s ease;
         }
         .message-wrapper.bot {
           display: flex;
@@ -60,7 +60,7 @@ const ChatMessage = ({ message }) => {
         }
         .message-container {
           display: flex;
-          max-width: 82%;
+          max-width: 80%;
           align-items: flex-start;
           gap: 10px;
         }
@@ -68,55 +68,55 @@ const ChatMessage = ({ message }) => {
           flex-direction: row-reverse;
         }
         .avatar {
-          width: 36px;
-          height: 36px;
+          width: 40px;
+          height: 40px;
           border-radius: 50%;
           display: flex;
           align-items: center;
           justify-content: center;
-          background: #1e293b;
-          color: #e2e8f0;
+          background: #b8e0d4;
+          color: #2c3e50;
           flex-shrink: 0;
-          box-shadow: 0 3px 8px rgba(15, 23, 42, 0.2);
+          box-shadow: 0 2px 5px rgba(168, 230, 207, 0.3);
         }
         .bot .avatar {
-          background: #0ea5e9;
-          color: #ffffff;
+          background: linear-gradient(135deg, #a8e6cf 0%, #7ccf9c 100%);
+          color: white;
         }
         .user .avatar {
-          background: #10b981;
-          color: #ffffff;
+          background: linear-gradient(135deg, #b8e0d4 0%, #a8e6cf 100%);
+          color: #2c3e50;
         }
         .message-bubble {
           padding: 12px 16px;
-          border-radius: 18px;
+          border-radius: 20px;
           position: relative;
           word-wrap: break-word;
-          box-shadow: 0 3px 6px rgba(15, 23, 42, 0.08);
+          box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
         .bot-message {
-          background: #f8fafc;
-          border: 1px solid #dbeafe;
-          border-top-left-radius: 6px;
-          color: #0f172a;
+          background: white;
+          border: 2px solid #a8e6cf;
+          border-top-left-radius: 4px;
+          color: #2c3e50;
         }
         .user-message {
-          background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-          color: #fff;
-          border-top-right-radius: 6px;
-          border: 1px solid #334155;
+          background: linear-gradient(135deg, #a8e6cf 0%, #7ccf9c 100%);
+          color: #2c3e50;
+          border-top-right-radius: 4px;
+          border: 2px solid #7ccf9c;
         }
         .error-message {
-          background: #fee2e2;
-          color: #991b1b;
-          border: 1px solid #fecaca;
+          background: #ffe6e6;
+          color: #d8000c;
+          border: 2px solid #ffb3b3;
         }
         .message-content {
           font-size: 0.95rem;
-          line-height: 1.55;
+          line-height: 1.5;
         }
         .message-content :global(pre) {
-          background: #e2e8f0;
+          background: #f0faf5;
           padding: 10px;
           border-radius: 8px;
           overflow-x: auto;
@@ -127,32 +127,34 @@ const ChatMessage = ({ message }) => {
           font-size: 0.9em;
         }
         .timestamp {
-          font-size: 0.68rem;
+          font-size: 0.7rem;
           margin-top: 6px;
-          opacity: 0.55;
+          opacity: 0.6;
           text-align: right;
         }
+        
         @keyframes fadeIn {
           from {
             opacity: 0;
-            transform: translateY(8px);
+            transform: translateY(10px);
           }
           to {
             opacity: 1;
             transform: translateY(0);
           }
         }
+        
         @media (max-width: 767px) {
           .message-container {
-            max-width: 88%;
+            max-width: 90%;
           }
           .avatar {
-            width: 30px;
-            height: 30px;
+            width: 32px;
+            height: 32px;
           }
           .avatar svg {
-            width: 14px;
-            height: 14px;
+            width: 16px;
+            height: 16px;
           }
         }
       `}</style>

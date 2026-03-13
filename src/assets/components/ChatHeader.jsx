@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
-import { FiMenu, FiEdit2, FiCheck, FiX } from 'react-icons/fi'
+import { FiMenu, FiDelete, FiEdit2, FiCheck, FiX } from 'react-icons/fi'
 
 const ChatHeader = ({ 
   chatTitle, 
@@ -55,7 +55,7 @@ const ChatHeader = ({
           ) : (
             <div className="header-info">
               <h2 className="mb-0">{chatTitle}</h2>
-              <p className="mb-0 text-muted">Powered by Gemini 2.5 Flash</p>
+              <p className="mb-0 text-muted">Powered by Gemini 2.0 Flash</p>
             </div>
           )}
         </div>
@@ -77,113 +77,113 @@ const ChatHeader = ({
             className="clear-btn"
             title="New chat"
           >
-            Delete Chat
+            <FiDelete /> New Chat
           </Button>
         </div>
       </div>
       
       <style jsx>{`
         .chat-header {
-          padding: 20px 26px;
-          background: #ffffff;
-          border-bottom: 1px solid #e2e8f0;
-          box-shadow: 0 1px 0 0 rgba(15, 23, 42, 0.05);
+          padding: 20px 30px;
+          background: linear-gradient(135deg, #ffffff 0%, #f0faf5 100%);
+          border-bottom: 2px solid #a8e6cf;
+          box-shadow: 0 2px 10px rgba(168, 230, 207, 0.2);
         }
         .header-content {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          gap: 12px;
         }
         .header-left {
           display: flex;
           align-items: center;
-          gap: 14px;
+          gap: 15px;
           flex: 1;
         }
         .menu-btn {
-          color: var(--primary);
+          color: #7ccf9c;
           padding: 0;
           display: flex;
           align-items: center;
         }
         .menu-btn:hover {
-          color: var(--primary-dark);
+          color: #a8e6cf;
         }
         .header-info h2 {
-          font-size: 1.25rem;
-          color: #0f172a;
-          font-weight: 700;
-          margin-bottom: 2px;
+          font-size: 1.4rem;
+          color: #2c3e50;
+          font-weight: 600;
+          margin-bottom: 4px;
         }
         .header-info p {
-          font-size: 0.78rem;
-          color: #64748b;
+          font-size: 0.85rem;
+          color: #7ccf9c;
         }
         .header-actions {
           display: flex;
           align-items: center;
-          gap: 8px;
+          gap: 10px;
         }
         .edit-title-btn {
-          color: #0f172a;
-          padding: 6px;
+          color: #7ccf9c;
+          padding: 8px;
           border-radius: 50%;
-          transition: all 0.2s ease;
+          transition: all 0.3s;
         }
         .edit-title-btn:hover {
-          background: #e2e8f0;
-          color: #0f172a;
+          background: #d4edda;
+          color: #2c3e50;
         }
         .clear-btn {
-          font-size: 0.85rem;
-          padding: 7px 14px;
-          border-radius: 999px;
-          background: linear-gradient(135deg, #0ea5e9 0%, #0f76b1 100%);
+          font-size: 0.9rem;
+          padding: 8px 16px;
+          border-radius: 25px;
+          background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
           border: none;
-          color: #ffffff;
-          font-weight: 600;
-          transition: all 0.2s ease;
+          color: white;
+          font-weight: 500;
+          transition: all 0.3s;
         }
         .clear-btn:hover {
-          transform: translateY(-1px);
-          box-shadow: 0 4px 14px rgba(14, 165, 233, 0.33);
+          transform: translateY(-2px);
+          box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
         }
         .title-edit {
           display: flex;
           align-items: center;
           gap: 8px;
-          background: #f8fafc;
-          padding: 6px 10px;
-          border-radius: 999px;
-          border: 1px solid #cbd5e1;
+          background: white;
+          padding: 5px 10px;
+          border-radius: 25px;
+          border: 2px solid #a8e6cf;
         }
         .title-input {
           border: none;
           background: transparent;
-          padding: 4px;
-          font-size: 1.05rem;
-          font-weight: 700;
-          color: #1e293b;
-          min-width: 220px;
+          padding: 5px;
+          font-size: 1.2rem;
+          font-weight: 600;
+          color: #2c3e50;
+          min-width: 250px;
         }
         .title-input:focus {
           outline: none;
           box-shadow: none;
         }
         .edit-action {
-          color: #0f172a;
+          color: #7ccf9c;
           padding: 5px;
         }
         .edit-action:hover {
-          color: #0f172a;
+          color: #2c3e50;
         }
+        
         @media (max-width: 767px) {
           .chat-header {
-            padding: 14px 18px;
+            padding: 15px 20px;
           }
           .header-info h2 {
-            font-size: 1rem;
+            font-size: 1.2rem;
             max-width: 150px;
             overflow: hidden;
             text-overflow: ellipsis;

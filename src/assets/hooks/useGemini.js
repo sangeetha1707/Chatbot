@@ -18,7 +18,6 @@ const useGemini = () => {
 
       const genAI = new GoogleGenerativeAI(API_KEY)
       
-      // Using Gemini 2.5 Flash model
       const model = genAI.getGenerativeModel({ 
         model: 'gemini-2.5-flash',
         generationConfig: {
@@ -29,7 +28,6 @@ const useGemini = () => {
         }
       })
 
-      // Add context for better responses
       const prompt = `Please provide a helpful, accurate, and friendly response to: ${message}`
       
       const result = await model.generateContent(prompt)
@@ -41,7 +39,6 @@ const useGemini = () => {
     } catch (err) {
       console.error('Gemini API Error:', err)
       
-      // Handle specific error types
       if (err.message.includes('API key')) {
         setError('Invalid or missing API key. Please check your configuration.')
       } else if (err.message.includes('quota')) {

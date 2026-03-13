@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
+import { Container, Row, Col } from 'react-bootstrap'
 import ChatHeader from './assets/components/ChatHeader'
 import ChatMessage from './assets/components/ChatMessage'
 import ChatInput from './assets/components/ChatInput'
@@ -19,7 +20,6 @@ function App() {
   const messagesEndRef = useRef(null)
   const [isTyping, setIsTyping] = useState(false)
 
-  // Load saved chats on mount
   useEffect(() => {
     loadSavedChats()
     startNewChat()
@@ -55,7 +55,6 @@ function App() {
   const handleSendMessage = async (messageText) => {
     if (!messageText.trim()) return
 
-    // Add user message
     const userMessage = {
       id: Date.now(),
       text: messageText,
@@ -67,7 +66,6 @@ function App() {
     setMessages(updatedMessages)
     setIsTyping(true)
 
-    // Auto-generate title from first user message
     if (messages.length === 1) {
       const newTitle = messageText.length > 30 
         ? messageText.substring(0, 30) + '...' 
@@ -76,7 +74,6 @@ function App() {
     }
 
     try {
-      // Get bot response
       const botResponse = await sendMessage(messageText)
       
       const botMessage = {
@@ -89,15 +86,13 @@ function App() {
       const finalMessages = [...updatedMessages, botMessage]
       setMessages(finalMessages)
       
-      // Save to storage
       await saveChat({
         id: chatId,
-        title: chatTitle,
+        title: messages.length === 1 ? messageText : chatTitle,
         messages: finalMessages,
         timestamp: new Date().toISOString()
       })
       
-      // Refresh saved chats list
       await loadSavedChats()
       
     } catch (err) {
@@ -148,9 +143,9 @@ function App() {
   }
 
   return (
-    <div className="chat-container">
-      <div className="chat-frame">
-        <div className={`history-sidebar ${showHistory ? 'show' : ''}`}>
+    <Container fluid className="chat-container p-0">
+      <Row className="g-0 h-100">
+        <Col md={3} className={`history-sidebar ${showHistory ? 'show' : ''}`}>
           <ChatHistory
             chats={savedChats}
             currentChatId={chatId}
@@ -159,18 +154,18 @@ function App() {
             onNewChat={startNewChat}
             onClose={() => setShowHistory(false)}
           />
-        </div>
-
-        <div className="chat-main">
+        </Col>
+        
+        <Col md={{ span: 9 }} className="chat-main">
           <div className="chat-card">
-            <ChatHeader
+            <ChatHeader 
               chatTitle={chatTitle}
               onClearChat={handleClearChat}
               onToggleHistory={toggleHistory}
               showHistory={showHistory}
               onUpdateTitle={handleUpdateTitle}
             />
-
+            
             <div className="chat-messages">
               {messages.map((message) => (
                 <ChatMessage key={message.id} message={message} />
@@ -178,18 +173,18 @@ function App() {
               {isTyping && <TypingIndicator />}
               <div ref={messagesEndRef} />
             </div>
-
+            
             <ChatInput onSendMessage={handleSendMessage} loading={isTyping} />
-
+            
             {error && (
               <div className="error-alert">
                 ⚠️ {error}
               </div>
             )}
           </div>
-        </div>
-      </div>
-    </div>
+        </Col>
+      </Row>
+    </Container>
   )
 }
 
